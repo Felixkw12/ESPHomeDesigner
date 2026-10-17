@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { load } from 'js-yaml';
 
 import {
     copyText,
@@ -206,7 +207,7 @@ sensor:
         expect(serviceData.target.entity_id).toBe('open_epaper_link.1234567890abcdef');
         expect(serviceData.data.dither).toBe(1);
         expect(formatted).toContain('service: open_epaper_link.drawcustom');
-        expect(formatted).toContain('entity_id: open_epaper_link.1234567890abcdef');
+        expect(formatted).toContain('entity_id: "open_epaper_link.1234567890abcdef"');
         expect(formatted).toContain('dither: 1');
         expect(formatted).toContain('"text":"Hello"');
     });
@@ -221,8 +222,22 @@ sensor:
         const formatted = formatOEPLServiceYaml(serviceData, { oeplEntityId: '95b2d0433f2c26d08088d6296a00a70d' });
 
         expect(serviceData.target).toEqual({ device_id: '95b2d0433f2c26d08088d6296a00a70d' });
-        expect(formatted).toContain('target:\n  device_id: 95b2d0433f2c26d08088d6296a00a70d\n');
+        expect(formatted).toContain('target:\n  device_id: "95b2d0433f2c26d08088d6296a00a70d"\n');
         expect(formatted).not.toContain('entity_id');
+    });
+
+    it.each([
+        '12345678901242348901234567890123',
+        '00000000000000000000000000000001'
+    ])('preserves numeric device ID %s when service YAML is parsed', (deviceId) => {
+        const serviceData = {
+            service: 'open_epaper_link.drawcustom',
+            target: {},
+            data: { background: 'white', rotate: 0, ttl: 60, payload: [] }
+        };
+
+        const formatted = formatOEPLServiceYaml(serviceData, { oeplEntityId: deviceId });
+        expect(load(formatted).target).toEqual({ device_id: deviceId });
     });
 
     it('extracts payload block from OpenDisplay YAML', () => {

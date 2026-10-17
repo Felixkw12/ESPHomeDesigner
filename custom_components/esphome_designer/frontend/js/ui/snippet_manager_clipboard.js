@@ -159,7 +159,7 @@ export function formatOEPLServiceYaml(serviceData, settings = {}) {
 
     const [targetKey, targetValue] = Object.entries(target)[0];
     let finalYaml = `service: ${serviceData.service}\n`;
-    finalYaml += `target:\n  ${targetKey}: ${targetValue}\n`;
+    finalYaml += `target:\n  ${targetKey}: ${JSON.stringify(targetValue)}\n`;
     finalYaml += `data:\n`;
     finalYaml += `  background: ${serviceData.data.background}\n`;
     finalYaml += `  rotate: ${serviceData.data.rotate}\n`;
