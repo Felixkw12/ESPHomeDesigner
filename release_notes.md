@@ -1,3 +1,18 @@
+## v1.0.0 RC48 - Mobile Sidebar, Device Profile Cleanup, OEPL, and Requesty
+**Release Date:** October 17, 2026
+
+### Features
+- **Requesty AI Provider (PR #522):** Added Requesty as an optional AI provider, including API-key settings and model selection.
+- **3.5-Inch BWRY E-Paper Preset (PR #549):** Added the 384x184 resolution preset and clarified support for black, white, red, and yellow tags.
+
+### Fixes
+- **Home Assistant Sidebar Access (PR #547, Issue #321):** Added a sidebar menu button on narrow screens and when the sidebar is always hidden. Resizing or rotating preserves the loaded editor.
+- **Duplicate Device Profiles (PR #546, Issue #545):** Removed duplicate reTerminal Sticky and Guition choices while preserving legacy layout IDs through derived compatibility aliases. Older Guition layouts inherit the canonical touchscreen transform and calibration.
+- **OpenEPaperLink 3.x Targets (PR #549):** Added device-ID targeting while retaining legacy entity-ID support. Exported YAML quotes target IDs so long numeric IDs and leading zeros remain intact.
+- **Release Metadata Refresh:** Updated package and lockfile metadata, the Home Assistant manifest version, the editor label, release notes, and the frontend production bundle for RC48.
+
+---
+
 ## v1.0.0 RC47 - Sun Times Clock Mode, LVGL Sensor ID Unification, and Security Update
 **Release Date:** October 10, 2026
 
